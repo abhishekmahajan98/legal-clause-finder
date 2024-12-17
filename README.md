@@ -193,12 +193,12 @@ POST /search
 
 ## Features
 
-- **Parallel Processing**: Uses ThreadPoolExecutor for concurrent chunk processing[1]
-- **Token Management**: Implements tiktoken for accurate token counting[1]
-- **Error Handling**: Comprehensive error handling with custom LLMPipelineError[1]
-- **Recursive Summarization**: Handles large documents through recursive summary generation[1]
-- **Conversation History**: Supports context-aware queries with conversation history[1]
-- **Deterministic Output**: Uses low temperature settings for consistent responses[1]
+- **Parallel Processing**: Uses ThreadPoolExecutor for concurrent chunk processing
+- **Token Management**: Implements tiktoken for accurate token counting
+- **Error Handling**: Comprehensive error handling with custom LLMPipelineError
+- **Recursive Summarization**: Handles large documents through recursive summary generation
+- **Conversation History**: Supports context-aware queries with conversation history
+- **Deterministic Output**: Uses low temperature settings for consistent responses
 
 ## Development
 
@@ -225,18 +225,18 @@ poetry run pytest
 - Supported document types: PDF only
 - Maximum context window: 128k tokens
 - Rate limits apply based on Azure service tier
-- Maximum token limit per context chunk: 100,000[1]
+- Maximum token limit per context chunk: 100,000
 
 
 
 ## Document Processing Assumptions
 
 **Document Type & Processing**
-- Documents are legal contracts processed through Azure Document Intelligence for text extraction[1]
-- Each document page becomes a single chunk, maintaining document structure and context[1]
+- Documents are legal contracts processed through Azure Document Intelligence for text extraction
+- Each document page becomes a single chunk, maintaining document structure and context
 
 **Embedding & Storage**
-- Page content is embedded using Azure OpenAI's ADA-002 model, generating 1500+ dimensional vectors[1]
+- Page content is embedded using Azure OpenAI's ADA-002 model, generating 1500+ dimensional vectors
 - Each chunk (page) is stored with comprehensive metadata including:
   - Page number
   - Document name
@@ -245,22 +245,14 @@ poetry run pytest
   - Account information
   - Client details
   - Content vector
-  - Title vector[1]
+  - Title vector
 
 **Search Infrastructure**
 - Azure AI Search is used for vector storage and retrieval
-- Chunks are indexed with both content and metadata for efficient searching[1]
-- Search supports semantic configuration for improved results[1]
+- Chunks are indexed with both content and metadata for efficient searching
+- Search supports semantic configuration for improved results
 
 **Retrieval Process**
 - Documents are retrieved using pagination with a batch size of 100
 - Maximum retrieval limit of 10,000 results per search
-- Uses semantic configuration "my-semantic-config" for enhanced search capabilities[1]
-
-
-
-Citations:
-[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/18058410/0d717939-e1e7-40ff-b1ef-3af606cf0dd9/paste.txt
-
-Citations:
-[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/18058410/0d717939-e1e7-40ff-b1ef-3af606cf0dd9/paste.txt
+- Uses semantic configuration "my-semantic-config" for enhanced search capabilities
