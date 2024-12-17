@@ -1,4 +1,4 @@
-# Legal Clause finer with LLMs
+# Legal Clause Retrieval with LLMs
 
 A smart document analysis system that leverages Large Language Models (LLMs) to efficiently search and analyze legal documents, reducing analysis time from hours to minutes while maintaining high recall for clause detection.
 
