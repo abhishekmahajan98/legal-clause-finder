@@ -1,4 +1,4 @@
-# Legal Document Analysis with LLMs
+# Legal Clause finer with LLMs
 
 A smart document analysis system that leverages Large Language Models (LLMs) to efficiently search and analyze legal documents, reducing analysis time from hours to minutes while maintaining high recall for clause detection.
 
@@ -79,7 +79,6 @@ uvicorn main:app --reload
         ├── llm_pipeline.py     # LLM query processing
 
 ```
-I'll update the Project Structure and add details about the experimental code files. Here's the modified section:
 
 ## Project Structure
 ```
