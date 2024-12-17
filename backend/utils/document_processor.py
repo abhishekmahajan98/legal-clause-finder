@@ -54,7 +54,8 @@ def extract_text_from_page(page):
         text += line.content + "\n"
     return text.strip()
 
-def process_document(local_path, doc_id, title, link):
+def process_document(local_path, doc_id, title, link, account, client_name, document_category):
+    """Process document with metadata for each page chunk"""
     document_result = extract_document_structure(local_path)
     
     documents = []
@@ -69,14 +70,17 @@ def process_document(local_path, doc_id, title, link):
             "title": chunk_title,
             "content": page_text,
             "page_number": page_num,
-            "document_category": "IMA",
+            "document_category": document_category,
             "document_title": title,
             "link": link,
+            "account": account,
+            "client_name": client_name,
             "titleVector": create_embeddings(chunk_title),
             "contentVector": create_embeddings(page_text)
         })
     
     return documents
+
 
 def upload_to_vector_index(documents):
     search_client = get_ai_search_client()

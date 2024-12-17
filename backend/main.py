@@ -21,7 +21,10 @@ class SearchRequest(BaseModel):
 async def upload_file(
     file: UploadFile = File(...),
     title: str = None,
-    link: str = None
+    link: str = None,
+    account: str = None,
+    client_name: str = None,
+    document_category: str = "IMA"  # default value
 ):
     try:
         # Create a temporary file to store the upload
@@ -31,14 +34,17 @@ async def upload_file(
             temp_file.write(content)
         
         # Generate a unique document ID
-        doc_id = str(uuid.uuid4())
+        doc_id = str(uuid.uuid4()).upper()
         
-        # Process the document
+        # Process the document with additional metadata
         documents = process_document(
-            temp_path, 
-            doc_id, 
-            title or file.filename,
-            link or ""
+            local_path=temp_path, 
+            doc_id=doc_id, 
+            title=title or file.filename,
+            link=link or "",
+            account=account or "N/A",
+            client_name=client_name or "N/A",
+            document_category=document_category
         )
         
         # Upload to Azure AI Search
@@ -58,6 +64,7 @@ async def upload_file(
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.post("/search")
 async def search_document(request: SearchRequest):

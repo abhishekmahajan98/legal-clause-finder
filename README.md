@@ -53,21 +53,75 @@ poetry add fastapi uvicorn azure-ai-formrecognizer azure-search-documents openai
 ```bash
 poetry install
 ```
-
-5. Run the Application
+5. Enter Poetry shell
 ```bash
-poetry run uvicorn main:app --reload
+poetry shell
+```
+
+6. Run the Application
+```bash
+uvicorn main:app --reload
 ```
 
 ## Project Structure
 ```
-├── pyproject.toml          # Poetry configuration
-├── poetry.lock            # Lock file for dependencies
-├── main.py               # FastAPI application
-├── document_processor.py # Document processing logic
-├── azure_utils.py       # Azure service clients
-└── llm_pipeline.py     # LLM query processing
+├──backend
+    ├── pyproject.toml          # Poetry configuration
+    ├── poetry.lock            # Lock file for dependencies
+    ├── main.py               # FastAPI application
+    ├── utils/
+    │   ├──azure_utils.py       # Azure service clients
+    │   ├── document_processor.py # Document processing logic
+    │   └── dev/
+    │       ├── azure_trial.py    # Experimental Azure integration code
+    │       └── chunking_strategy_trial.py  # Chunking experiments
+    ├── pipelines/
+        ├── llm_pipeline.py     # LLM query processing
+
 ```
+I'll update the Project Structure and add details about the experimental code files. Here's the modified section:
+
+## Project Structure
+```
+├──backend
+    ├── pyproject.toml          # Poetry configuration
+    ├── poetry.lock            # Lock file for dependencies
+    ├── main.py               # FastAPI application
+    ├── utils/
+    │   ├──azure_utils.py       # Azure service clients
+    │   ├── document_processor.py # Document processing logic
+    │   └── dev/
+    │       ├── azure_trial.py    # Experimental Azure integration code
+    │       └── chunking_strategy_trial.py  # Chunking experiments
+    ├── pipelines/
+        ├── llm_pipeline.py     # LLM query processing
+```
+
+### Experimental Code
+
+**Azure Trial ipynb** (`utils/dev/azure_trial.py`)
+- Blob storage operations and downloads
+- Vector index creation in Azure AI Search
+- Document chunking implementations
+- Text embedding generation
+- Index upload procedures
+- Configuration testing
+
+**Chunking Strategy Trial ipynb** (utils/dev/chunking_strategy_trial.py)
+- Fixed-size chunking experiments
+- Semantic-aware splitting
+- Overlap configurations
+- Performance benchmarking
+- Quality assessment tools
+
+The experimental code provides a sandbox for testing different approaches before implementing them in the production pipeline. This allows for:
+- Testing various Azure service configurations
+- Optimizing chunking strategies for legal documents
+- Evaluating embedding quality
+- Measuring search performance
+- Validating integration points
+
+All successful experiments are eventually migrated to the main production code in `utils/azure_utils.py` and `utils/document_processor.py`.
 
 ## API Endpoints
 
@@ -155,19 +209,46 @@ poetry run pytest
 
 ## Limitations
 
-- Maximum file size: 50MB
-- Supported languages: English only
-- Maximum context window: 32k tokens
+- Maximum file size: 1 GB
+- Supported document types: PDF only
+- Maximum context window: 128k tokens
 - Rate limits apply based on Azure service tier
 - Maximum token limit per context chunk: 100,000[1]
 
-## Future Improvements
 
-- Multi-language support
-- Custom domain-specific models
-- Improved chunking strategies
-- Real-time processing for smaller documents
-- Batch processing capabilities
+
+## Document Processing Assumptions
+
+**Document Type & Processing**
+- Documents are legal contracts processed through Azure Document Intelligence for text extraction[1]
+- Each document page becomes a single chunk, maintaining document structure and context[1]
+
+**Embedding & Storage**
+- Page content is embedded using Azure OpenAI's ADA-002 model, generating 1500+ dimensional vectors[1]
+- Each chunk (page) is stored with comprehensive metadata including:
+  - Page number
+  - Document name
+  - Document type
+  - Document link
+  - Account information
+  - Client details
+  - Content vector
+  - Title vector[1]
+
+**Search Infrastructure**
+- Azure AI Search is used for vector storage and retrieval
+- Chunks are indexed with both content and metadata for efficient searching[1]
+- Search supports semantic configuration for improved results[1]
+
+**Retrieval Process**
+- Documents are retrieved using pagination with a batch size of 100
+- Maximum retrieval limit of 10,000 results per search
+- Uses semantic configuration "my-semantic-config" for enhanced search capabilities[1]
+
+
+
+Citations:
+[1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/18058410/0d717939-e1e7-40ff-b1ef-3af606cf0dd9/paste.txt
 
 Citations:
 [1] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/18058410/0d717939-e1e7-40ff-b1ef-3af606cf0dd9/paste.txt
