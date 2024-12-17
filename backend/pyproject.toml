@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "legal-clause-finder"
+name = "laxmi-pm-backend"
 version = "0.1.0"
 description = ""
 authors = ["Abhishek Mahajan"]
@@ -8,16 +8,16 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 fastapi = "^0.115.6"
+python-multipart = "^0.0.20"
 pydantic = "^2.10.3"
-uvicorn = "^0.33.0"
-python-multipart = "^0.0.19"
-pdf2image = "^1.17.0"
-pillow = "^11.0.0"
+uvicorn = "^0.34.0"
+numpy = "^2.2.0"
+pandas = "^2.2.3"
+azure-search = "^1.0.0b2"
+tiktoken = "^0.8.0"
+openai = "^1.58.0"
 azure-ai-formrecognizer = "^3.3.3"
 azure-search-documents = "^11.5.2"
-openai = "^1.58.0"
-numpy = "^2.2.0"
-tiktoken = "^0.8.0"
 
 
 [build-system]
