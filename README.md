@@ -122,6 +122,8 @@ The experimental code provides a sandbox for testing different approaches before
 
 All successful experiments are eventually migrated to the main production code in `utils/azure_utils.py` and `utils/document_processor.py`.
 
+In the README.md, I'll update the /upload endpoint documentation to include all the available parameters. Here's the corrected version of that section:
+
 ## API Endpoints
 
 ### Upload Document
@@ -129,13 +131,24 @@ All successful experiments are eventually migrated to the main production code i
 POST /upload
 ```
 
-**Request:**
+**Request Parameters:**
+- `file`: PDF document (Required)
+- `title`: Document title (Optional)
+- `link`: Document URL (Optional)
+- `account`: Account name (Optional)
+- `client_name`: Client name (Optional)
+- `document_category`: Document category (Optional, defaults to "IMA")
+
+**Sample Request:**
 ```bash
 curl -X POST "http://localhost:8000/upload" \
   -H "Content-Type: multipart/form-data" \
   -F "file=@contract.pdf" \
   -F "title=Service Agreement 2024" \
-  -F "link=https://example.com/doc"
+  -F "link=https://example.com/doc" \
+  -F "account=ACME Corp" \
+  -F "client_name=John Doe" \
+  -F "document_category=Contract"
 ```
 
 **Response:**
