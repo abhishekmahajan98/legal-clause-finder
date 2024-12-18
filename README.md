@@ -63,22 +63,6 @@ poetry shell
 uvicorn main:app --reload
 ```
 
-## Project Structure
-```
-├──backend
-    ├── pyproject.toml          # Poetry configuration
-    ├── poetry.lock            # Lock file for dependencies
-    ├── main.py               # FastAPI application
-    ├── utils/
-    │   ├──azure_utils.py       # Azure service clients
-    │   ├── document_processor.py # Document processing logic
-    │   └── dev/
-    │       ├── azure_trial.py    # Experimental Azure integration code
-    │       └── chunking_strategy_trial.py  # Chunking experiments
-    ├── pipelines/
-        ├── llm_pipeline.py     # LLM query processing
-
-```
 
 ## Project Structure
 ```
